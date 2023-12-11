@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -37,15 +36,26 @@ class _HomescreenState extends State<Homescreen> {
                 itemBuilder: (ctx,index){
                   final DocumentSnapshot donorsnap=snapshot.data.docs[index];
                   return Container(
+                    decoration:const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Color.fromARGB(255, 241, 237, 237),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 20,
+                          spreadRadius: 20
+                        )
+                      ]
+                    ),
                     height: 125,
-                    color: Color.fromARGB(255, 241, 237, 237),
+                    
                     child:  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         SizedBox(
                           child: CircleAvatar(
                             radius: 50,
-                            child: Text(donorsnap['blood'],style: TextStyle(fontSize: 30),),
+                            child: Text(donorsnap['blood'],style: const TextStyle(fontSize: 30),),
                           ),
                         ),
                         Column(
@@ -56,7 +66,7 @@ class _HomescreenState extends State<Homescreen> {
                             Text('Mobile:${donorsnap['mobile'].toString()}'),
                             Text('District:${donorsnap['district']}'),
                             Text('Village:${donorsnap['village']}'),
-                            Text('Village:${donorsnap['blood']}'),
+                            Text('Blood:${donorsnap['blood']}'),
                           ],
                         ),
                       ],

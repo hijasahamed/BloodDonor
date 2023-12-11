@@ -1,7 +1,6 @@
 import 'package:blood_donor/screens/add_donor.dart';
 import 'package:blood_donor/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main()  async {
