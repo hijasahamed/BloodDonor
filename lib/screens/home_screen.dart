@@ -34,7 +34,13 @@ class _HomescreenState extends State<Homescreen> {
             return ListView.separated(
               itemBuilder: (ctx,index){
                 final DocumentSnapshot donorsnap=snapshot.data.docs[index];
-                return Text(donorsnap['name']);
+                return Column(
+                  children: [
+                    Text(donorsnap['name']),
+                    Text(donorsnap['village']),
+                    Text(donorsnap['district']),
+                  ],
+                );
               }, 
               separatorBuilder: (ctx,index){
                 return const  SizedBox();
