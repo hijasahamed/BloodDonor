@@ -16,8 +16,18 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){}, 
+          icon:const Icon(Icons.menu)
+        ),
         title: const Text('Blood Donors',style: TextStyle(fontWeight: FontWeight.w700),),
         centerTitle: true,
+        actions: [
+          IconButton(
+          onPressed: (){}, 
+          icon:const Icon(Icons.search)
+        ),
+        ],
         backgroundColor: Colors.red, 
       ),
       floatingActionButton: FloatingActionButton(
@@ -35,41 +45,37 @@ class _HomescreenState extends State<Homescreen> {
               child: ListView.separated(
                 itemBuilder: (ctx,index){
                   final DocumentSnapshot donorsnap=snapshot.data.docs[index];
-                  return Container(
-                    decoration:const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Color.fromARGB(255, 241, 237, 237),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 20,
-                          spreadRadius: 20
-                        )
-                      ]
-                    ),
-                    height: 125,
-                    
-                    child:  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        SizedBox(
-                          child: CircleAvatar(
-                            radius: 50,
-                            child: Text(donorsnap['blood'],style: const TextStyle(fontSize: 30),),
+                  return Card(
+                    elevation: 15,
+                    child: Container(
+                      decoration:const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Color.fromARGB(255, 241, 237, 237),                      
+                      ),
+                      height: 125,
+                      
+                      child:  Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                            child: CircleAvatar(
+                              radius: 50,
+                              child: Text(donorsnap['blood'],style: const TextStyle(fontSize: 30),),
+                            ),
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Name:${donorsnap['name']}'),
-                            Text('Age:${donorsnap['age'].toString()}'),
-                            Text('Mobile:${donorsnap['mobile'].toString()}'),
-                            Text('District:${donorsnap['district']}'),
-                            Text('Village:${donorsnap['village']}'),
-                            Text('Blood:${donorsnap['blood']}'),
-                          ],
-                        ),
-                      ],
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Name:${donorsnap['name']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                              Text('Age:${donorsnap['age'].toString()}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                              Text('Mobile:${donorsnap['mobile'].toString()}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                              Text('District:${donorsnap['district']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                              Text('Village:${donorsnap['village']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                              Text('Blood:${donorsnap['blood']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 }, 
