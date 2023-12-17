@@ -1,3 +1,4 @@
+import 'package:blood_donor/screens/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -19,8 +20,7 @@ class _HomescreenState extends State<Homescreen> {
         leading: Builder(builder: (context) {
           return IconButton(
             splashRadius: 27,
-            onPressed: () {
-              
+            onPressed: () {              
               Scaffold.of(context).openDrawer();
             },
             icon: const Icon(
@@ -29,12 +29,12 @@ class _HomescreenState extends State<Homescreen> {
             iconSize: 40,
           );
         }),
-        title: const Text('Blood Donors',style: TextStyle(fontWeight: FontWeight.w700),),
+        title: const Text('Blood Donors',style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white),),
         centerTitle: true,
         actions: [
           IconButton(
           onPressed: (){}, 
-          icon:const Icon(Icons.search)
+          icon:const Icon(Icons.search,color: Colors.white,)
         ),
         ],
         backgroundColor: Colors.red, 
@@ -42,10 +42,11 @@ class _HomescreenState extends State<Homescreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: (){Navigator.pushNamed(context, '2');},
         backgroundColor: Colors.red,
-        child:const Icon(Icons.add,size: 50,),
+        elevation: 25,
+        child:const Icon(Icons.add,size: 50,color: Colors.white,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      drawer: Drawer(),
+      drawer:const Drawerscreen(),
       body: StreamBuilder(
         stream: donor.orderBy('name').snapshots(), 
         builder: (context,AsyncSnapshot snapshot){
