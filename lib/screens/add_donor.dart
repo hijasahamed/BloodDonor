@@ -1,4 +1,5 @@
 
+import 'package:blood_donor/screens/functions/fuctions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ final bloodGroups=['A+','A-','B+','B-','O+','O-','AB+','AB-'];
 class _AddblooduserState extends State<Addblooduser> {
  
   String ? selectedGroup;
-  final CollectionReference donor= FirebaseFirestore.instance.collection('blooddonation');
+
 
   void addDoner(){
     final data={

@@ -1,4 +1,5 @@
 import 'package:blood_donor/screens/drawer.dart';
+import 'package:blood_donor/screens/functions/fuctions.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,6 +13,7 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
 
   final CollectionReference donor= FirebaseFirestore.instance.collection('blooddonation');
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,36 +58,39 @@ class _HomescreenState extends State<Homescreen> {
               child: ListView.separated(
                 itemBuilder: (ctx,index){
                   final DocumentSnapshot donorsnap=snapshot.data.docs[index];
-                  return Card(
-                    elevation: 15,
-                    child: Container(
-                      decoration:const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Color.fromARGB(255, 241, 237, 237),                      
-                      ),
-                      height: 125,
-                      
-                      child:  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            child: CircleAvatar(
-                              radius: 50,
-                              child: Text(donorsnap['blood'],style: const TextStyle(fontSize: 30),),
+                  return GestureDetector(
+                    onTap: () => deletebuttonclicked(donorsnap.id, context),
+                    child: Card(
+                      elevation: 15,
+                      child: Container(
+                        decoration:const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color.fromARGB(255, 241, 237, 237),                      
+                        ),
+                        height: 125,
+                        
+                        child:  Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(
+                              child: CircleAvatar(
+                                radius: 50,
+                                child: Text(donorsnap['blood'],style: const TextStyle(fontSize: 30),),
+                              ),
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Name:${donorsnap['name']}',style: const TextStyle(fontWeight: FontWeight.w500),),
-                              Text('Age:${donorsnap['age'].toString()}',style: const TextStyle(fontWeight: FontWeight.w500),),
-                              Text('Mobile:${donorsnap['mobile'].toString()}',style: const TextStyle(fontWeight: FontWeight.w500),),
-                              Text('District:${donorsnap['district']}',style: const TextStyle(fontWeight: FontWeight.w500),),
-                              Text('Village:${donorsnap['village']}',style: const TextStyle(fontWeight: FontWeight.w500),),
-                              Text('Blood:${donorsnap['blood']}',style: const TextStyle(fontWeight: FontWeight.w500),),
-                            ],
-                          ),
-                        ],
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Name:${donorsnap['name']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                                Text('Age:${donorsnap['age'].toString()}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                                Text('Mobile:${donorsnap['mobile'].toString()}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                                Text('District:${donorsnap['district']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                                Text('Village:${donorsnap['village']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                                Text('Blood:${donorsnap['blood']}',style: const TextStyle(fontWeight: FontWeight.w500),),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

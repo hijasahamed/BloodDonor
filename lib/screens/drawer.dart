@@ -16,8 +16,17 @@ class Drawerscreen extends StatelessWidget {
               color: Colors.red,
               child: SizedBox(
                 height: 60,
-                child: Center(
-                  child: Text(bloodGroups[index]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text(bloodGroups[index],style: const TextStyle(fontWeight: FontWeight.w600,fontSize: 18),),
+                          const Icon(Icons.bloodtype)
+                        ],
+                      )),
+                  ],
                 ),
               ),
             );
