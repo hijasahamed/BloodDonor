@@ -16,10 +16,19 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: (){}, 
-          icon:const Icon(Icons.menu)
-        ),
+        leading: Builder(builder: (context) {
+          return IconButton(
+            splashRadius: 27,
+            onPressed: () {
+              
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(
+              Icons.menu,color: Colors.white,
+            ),
+            iconSize: 40,
+          );
+        }),
         title: const Text('Blood Donors',style: TextStyle(fontWeight: FontWeight.w700),),
         centerTitle: true,
         actions: [
@@ -36,6 +45,7 @@ class _HomescreenState extends State<Homescreen> {
         child:const Icon(Icons.add,size: 50,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      drawer: Drawer(),
       body: StreamBuilder(
         stream: donor.orderBy('name').snapshots(), 
         builder: (context,AsyncSnapshot snapshot){
