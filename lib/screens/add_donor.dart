@@ -9,9 +9,10 @@ class Addblooduser extends StatefulWidget {
   State<Addblooduser> createState() => _AddblooduserState();
 }
 
-class _AddblooduserState extends State<Addblooduser> {
+final bloodGroups=['A+','A-','B+','B-','O+','O-','AB+','AB-'];
 
-  final bloodGroups=['A+','A-','B+','B-','O+','O-','AB+','AB-'];
+class _AddblooduserState extends State<Addblooduser> {
+ 
   String ? selectedGroup;
   final CollectionReference donor= FirebaseFirestore.instance.collection('blooddonation');
 
