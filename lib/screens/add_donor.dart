@@ -1,6 +1,4 @@
-
 import 'package:blood_donor/screens/functions/fuctions.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Addblooduser extends StatefulWidget {
@@ -15,7 +13,6 @@ final bloodGroups=['A+','A-','B+','B-','O+','O-','AB+','AB-'];
 class _AddblooduserState extends State<Addblooduser> {
  
   String ? selectedGroup;
-
 
   void addDoner(){
     final data={

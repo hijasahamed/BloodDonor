@@ -59,7 +59,7 @@ class _HomescreenState extends State<Homescreen> {
                 itemBuilder: (ctx,index){
                   final DocumentSnapshot donorsnap=snapshot.data.docs[index];
                   return GestureDetector(
-                    onTap: () => deletebuttonclicked(donorsnap.id, context),
+                    onLongPress: () => deletebuttonclicked(donorsnap.id, context),
                     child: Card(
                       elevation: 15,
                       child: Container(

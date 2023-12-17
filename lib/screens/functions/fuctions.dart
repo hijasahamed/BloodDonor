@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-  final CollectionReference donor= FirebaseFirestore.instance.collection('blooddonation');
+final CollectionReference donor= FirebaseFirestore.instance.collection('blooddonation');
 
 Future<void> deletebuttonclicked(data,context) async{ 
     showDialog(
@@ -14,19 +14,7 @@ Future<void> deletebuttonclicked(data,context) async{
               onPressed: (){ 
                 removeBloodUser(data);
                 Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    duration: Duration(seconds: 2),
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor:  Color.fromARGB(255, 219, 14, 14),
-                    margin: EdgeInsets.all(75),
-                    content: Text(
-                      'Details Deleted',
-                      textAlign: TextAlign.center,
- 
-                    ),
-                  ),
-                );                
+                scaffoldMessage('Details Deleted', context);                
               }, 
               child:const Text('YES'),
             ),
@@ -40,8 +28,21 @@ Future<void> deletebuttonclicked(data,context) async{
         );
       }
     );
-  }
+}
 
-  removeBloodUser(docid){
-   donor.doc(docid).delete();
-  }
+removeBloodUser(docid){
+  donor.doc(docid).delete();
+}
+
+scaffoldMessage(text,context){
+  ScaffoldMessenger.of(context).showSnackBar(
+     SnackBar(
+      duration: const Duration(seconds: 2),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor:  const Color.fromARGB(255, 219, 14, 14),
+      margin: const EdgeInsets.all(75),
+      content: Text(text,textAlign: TextAlign.center,
+      ),
+    ),
+  );
+}
