@@ -8,7 +8,7 @@ Future<void> deletebuttonclicked(data,context) async{
       context: context, 
       builder: (ctx){ 
         return AlertDialog(
-          content: Text('Do You Want To Delete This Donor?',style:const TextStyle(fontWeight: FontWeight.w600),),  
+          content: const Text('Do You Want To Delete This Donor?',style:TextStyle(fontWeight: FontWeight.w600),),  
           actions: [
             TextButton(
               onPressed: (){ 

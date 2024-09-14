@@ -1,4 +1,4 @@
-import 'package:blood_donor/screens/functions/fuctions.dart';
+import 'package:blood_donor/functions/fuctions.dart';
 import 'package:flutter/material.dart';
 
 class Addblooduser extends StatefulWidget {
@@ -123,8 +123,8 @@ class _AddblooduserState extends State<Addblooduser> {
                   addDoner();
                 },
                 style:const ButtonStyle(
-                  minimumSize: MaterialStatePropertyAll(Size(200, 50)),
-                  backgroundColor: MaterialStatePropertyAll(Colors.red)
+                  minimumSize: WidgetStatePropertyAll(Size(200, 50)),
+                  backgroundColor: WidgetStatePropertyAll(Colors.red)
                 ),
                  
                 child:const Text('Submit',style: TextStyle(fontSize: 20,color: Colors.white),)
