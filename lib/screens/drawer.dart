@@ -1,12 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'dart:math';
-
-import 'package:blood_donor/functions/fuctions.dart';
 import 'package:blood_donor/screens/add_donor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Drawerscreen extends StatelessWidget {
   const Drawerscreen({super.key});
@@ -18,9 +13,12 @@ class Drawerscreen extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            const Text(
-              'Blood Groups',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Blood Groups',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white),
+              ),
             ),
             Expanded(
               child: ListView.separated(
@@ -34,31 +32,34 @@ class Drawerscreen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Card(
-                      elevation: 5,
-                      color: Colors.white,
-                      child: SizedBox(
-                        height: 60,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  bloodGroups[index],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18,
-                                    color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15,right: 15),
+                      child: Card(
+                        elevation: 5,
+                        color: Colors.white,
+                        child: SizedBox(
+                          height: 50,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    bloodGroups[index],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                      color: Colors.red,
+                                    ),
                                   ),
-                                ),
-                                const Icon(
-                                  Icons.bloodtype,
-                                  color: Colors.red,
-                                )
-                              ],
-                            ),
-                          ],
+                                  const Icon(
+                                    Icons.bloodtype,
+                                    color: Colors.red,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -89,6 +90,7 @@ class BloodDonorListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           onPressed:() {
@@ -112,54 +114,77 @@ class BloodDonorListScreen extends StatelessWidget {
           } else if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
             return const Center(child: Text('No donors found for this blood group'));
           } else {
-            return ListView.separated(
-              itemCount: snapshot.data.docs.length,
-              itemBuilder: (ctx, index) {
-                final DocumentSnapshot donorSnap = snapshot.data.docs[index];
-                return InkWell(
-                  onTap: () {
-                    final mobileNumber = donorSnap['mobile'];
-                    showDialog(
-                      context: ctx,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Contact Donor'),
-                          content: Text('Would you like to call ${donorSnap['name']}?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Cancel'),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.separated(               
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (ctx, index) {
+                  final DocumentSnapshot donorsnap = snapshot.data.docs[index];
+                  return GestureDetector(
+                    child: Card(
+                      color: Colors.white,
+                      elevation: 15,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color.fromARGB(255, 241, 237, 237),
+                        ),
+                        height: 125,
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 25,),
+                            CircleAvatar(
+                              backgroundColor: Colors.red,
+                              radius: 30,
+                              child: Text(
+                                donorsnap['blood'],
+                                style: const TextStyle(fontSize: 30,color: Colors.white),
+                              ),
                             ),
-                            TextButton(
-                              onPressed: () async {
-                                launchDialer(mobileNumber,context);
-                              },
-                              child: const Text('Call Donor'),
+                            const SizedBox(width: 25,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Name: ${donorsnap['name']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  'Age: ${donorsnap['age'].toString()}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  'Mobile: ${donorsnap['mobile'].toString()}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  'District: ${donorsnap['district']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  'Village: ${donorsnap['village']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  'Blood: ${donorsnap['blood']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
                             ),
                           ],
-                        );
-                      },
-                    );
-                  },
-                  child: ListTile(
-                    title: Text(donorSnap['name']),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Mobile: ${donorSnap['mobile']}'),
-                        Text('Mobile: ${donorSnap['district']}'),
-                        Text('Mobile: ${donorSnap['village']}'),
-                      ],
+                        ),
+                      ),
                     ),
-                    trailing: Text('Age: ${donorSnap['age'].toString()}'),
-                  ),
-                );
-              },
-              separatorBuilder: (ctx, index) {
-                return const Divider();
-              },
+                  );
+                },
+                separatorBuilder: (ctx, index) => const SizedBox(height: 10),
+              ),
             );
           }
         },
