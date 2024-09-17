@@ -86,8 +86,8 @@ class _HomescreenState extends State<Homescreen> {
                   final DocumentSnapshot donorsnap = snapshot.data.docs[index];
 
                   return GestureDetector(
-                    onLongPress: () =>
-                        deletebuttonclicked(donorsnap.id, context),
+                    // onLongPress: () =>
+                    //     deletebuttonclicked(donorsnap.id, context),
                     child: Card(
                       color: Colors.white,
                       elevation: 15,

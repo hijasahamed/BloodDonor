@@ -1,5 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final CollectionReference donor= FirebaseFirestore.instance.collection('blooddonation');
 
@@ -45,4 +49,27 @@ scaffoldMessage(text,context){
       ),
     ),
   );
+}
+
+Future<void> makePhoneCall(String phoneNumber) async {
+  if (await Permission.phone.request().isGranted) {
+    final Uri url = Uri.parse('tel:$phoneNumber');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      print('Could not launch the dialer for $phoneNumber');
+    }
+  } else {
+    print('Phone call permission not granted');
+  }
+}
+
+Future<void> makeSms(String phoneNumber) async {
+  final Uri smsUrl = Uri.parse('sms:$phoneNumber');
+  
+  if (await canLaunchUrl(smsUrl)) {
+    await launchUrl(smsUrl, mode: LaunchMode.externalApplication);
+  } else {
+    print('Could not launch the SMS app for $phoneNumber');
+  }
 }

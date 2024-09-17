@@ -1,6 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:math';
+
+import 'package:blood_donor/functions/fuctions.dart';
 import 'package:blood_donor/screens/add_donor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Drawerscreen extends StatelessWidget {
   const Drawerscreen({super.key});
@@ -8,19 +14,19 @@ class Drawerscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.red,
       child: SafeArea(
         child: Column(
           children: [
             const Text(
               'Blood Groups',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.red),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white),
             ),
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      // Navigate to the blood donor list screen with selected blood group
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -30,7 +36,7 @@ class Drawerscreen extends StatelessWidget {
                     },
                     child: Card(
                       elevation: 5,
-                      color: Colors.red,
+                      color: Colors.white,
                       child: SizedBox(
                         height: 60,
                         child: Row(
@@ -43,12 +49,12 @@ class Drawerscreen extends StatelessWidget {
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 18,
-                                    color: Colors.white,
+                                    color: Colors.red,
                                   ),
                                 ),
                                 const Icon(
                                   Icons.bloodtype,
-                                  color: Colors.white,
+                                  color: Colors.red,
                                 )
                               ],
                             ),
@@ -84,7 +90,13 @@ class BloodDonorListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Donors for $bloodGroup'),
+        leading: IconButton(
+          onPressed:() {
+            Navigator.of(context).pop();
+          }, 
+          icon: const Icon(Icons.arrow_back_ios_new,color: Colors.white,)
+        ),
+        title: Text('Donors for $bloodGroup',style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
         backgroundColor: Colors.red,
       ),
       body: StreamBuilder(
@@ -104,10 +116,38 @@ class BloodDonorListScreen extends StatelessWidget {
               itemCount: snapshot.data.docs.length,
               itemBuilder: (ctx, index) {
                 final DocumentSnapshot donorSnap = snapshot.data.docs[index];
-                return ListTile(
-                  title: Text(donorSnap['name']),
-                  subtitle: Text('Mobile: ${donorSnap['mobile']}'),
-                  trailing: Text('Age: ${donorSnap['age'].toString()}'),
+                return InkWell(
+                  onTap: () {
+                    final mobileNumber = donorSnap['mobile'];
+                    showDialog(
+                      context: ctx,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Contact Donor'),
+                          content: Text('Would you like to call ${donorSnap['name']}?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                        onPressed: () async {
+                           makePhoneCall(mobileNumber);
+                        },
+                        child: const Text('Call Donor'),
+                      ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: ListTile(
+                    title: Text(donorSnap['name']),
+                    subtitle: Text('Mobile: ${donorSnap['mobile']}'),
+                    trailing: Text('Age: ${donorSnap['age'].toString()}'),
+                  ),
                 );
               },
               separatorBuilder: (ctx, index) {
