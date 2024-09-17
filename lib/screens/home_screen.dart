@@ -1,5 +1,4 @@
 import 'package:blood_donor/screens/drawer.dart';
-import 'package:blood_donor/functions/fuctions.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -59,7 +58,6 @@ class _HomescreenState extends State<Homescreen> {
           color: Colors.white,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       drawer: const Drawerscreen(),
       body: StreamBuilder(
         stream: donor.orderBy('name').snapshots(),

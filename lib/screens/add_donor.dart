@@ -37,7 +37,13 @@ class _AddblooduserState extends State<Addblooduser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Donors',style: TextStyle(fontWeight: FontWeight.w700),),
+        title: const Text('Add Donors',style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white),),
+        leading: IconButton(
+          onPressed:() {
+            Navigator.of(context).pop();
+          }, 
+          icon: const Icon(Icons.arrow_back_ios_new,color: Colors.white,)
+        ),
         centerTitle: true,
         backgroundColor: Colors.red,  
       ),

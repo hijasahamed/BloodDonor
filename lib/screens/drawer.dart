@@ -133,11 +133,11 @@ class BloodDonorListScreen extends StatelessWidget {
                               child: const Text('Cancel'),
                             ),
                             TextButton(
-                        onPressed: () async {
-                           makePhoneCall(mobileNumber);
-                        },
-                        child: const Text('Call Donor'),
-                      ),
+                              onPressed: () async {
+                                launchDialer(mobileNumber,context);
+                              },
+                              child: const Text('Call Donor'),
+                            ),
                           ],
                         );
                       },
@@ -145,7 +145,14 @@ class BloodDonorListScreen extends StatelessWidget {
                   },
                   child: ListTile(
                     title: Text(donorSnap['name']),
-                    subtitle: Text('Mobile: ${donorSnap['mobile']}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Mobile: ${donorSnap['mobile']}'),
+                        Text('Mobile: ${donorSnap['district']}'),
+                        Text('Mobile: ${donorSnap['village']}'),
+                      ],
+                    ),
                     trailing: Text('Age: ${donorSnap['age'].toString()}'),
                   ),
                 );
